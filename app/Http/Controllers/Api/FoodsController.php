@@ -42,14 +42,16 @@ class FoodsController extends Controller
            );
 
            $imageFile =  $request->file('image_url');
-           $imagePath = Storage::putFile('public/food-images', $imageFile);
+           // Simpan file ke disk 'public' secara eksplisit
+           $imagePath = Storage::disk('public')->putFile('food-images', $imageFile);
 
            $foods = foods::query()->create([
                'category_id' => $request->category_id,
                'name' => $request->name,
                'description' => $request->description,
                'price' => $request->price,
-               'image_url' => Storage::url($imagePath),
+               // Simpan path yang bisa diakses publik
+               'image_url' => '/storage/food-images/' . basename($imagePath),
                'is_available' => $request->is_available
            ]);
            $foods->save();
