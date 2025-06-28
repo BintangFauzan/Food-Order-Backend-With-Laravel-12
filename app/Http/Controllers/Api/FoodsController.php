@@ -42,7 +42,7 @@ class FoodsController extends Controller
            );
 
            $imageFile =  $request->file('image_url');
-           // Simpan file ke disk 'public' secara eksplisit BBBBBBBBBBBBBBBBBBBBBBBB
+           // Simpan file ke disk 'public' secara eksplisit
            $imagePath = Storage::disk('public')->putFile('food-images', $imageFile);
 
            $foods = foods::query()->create([
@@ -85,8 +85,9 @@ class FoodsController extends Controller
             ]
             );
 
-            $imageFile =  $request->file('image_url');
-            $imagePath = Storage::putFile('public/food-images', $imageFile);
+             $imageFile =  $request->file('image_url');
+           // Simpan file ke disk 'public' secara eksplisit BBBBBBBBBBBBBBBBBBBBBBBB
+           $imagePath = Storage::disk('public')->putFile('food-images', $imageFile);
 
             $foods = foods::query()->find($id);
             $foods->update([

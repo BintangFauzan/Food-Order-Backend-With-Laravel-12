@@ -98,4 +98,13 @@ class UserController extends Controller
         $user->delete();
         return new UserResource(true, "berhasil hapus data user", $user);
     }
+    public function logout(Request $request)
+    {
+        // Menghapus token akses saat ini
+        $request->user()->currentAccessToken()->delete();
+        return response()->json([
+            'status' => 'success',
+            'message' => 'Berhasil logout',
+        ]);
+    }
 }
